@@ -5,7 +5,7 @@ from io import StringIO
 from datetime import datetime
 import requests
 
-requests.post("http://backend:8000/upload/records", files=files)
+
 
 st.set_page_config(page_title="Agent Productivity - Deluxe", layout="wide")
 st.title("Agent Productivity — Deluxe Streamlit UI")
