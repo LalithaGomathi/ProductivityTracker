@@ -1,9 +1,17 @@
-
+uvicorn backend.main:app --host 0.0.0.0 --port 8000
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.responses import JSONResponse, FileResponse
 import pandas as pd, os
 from . import crud
 app = FastAPI(title="Agent Productivity Backend")
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.post("/upload/records")
+async def upload_records(...):
+    # handle records
+
 
 @app.get('/')
 def root():
