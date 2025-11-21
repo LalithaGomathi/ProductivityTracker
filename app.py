@@ -16,7 +16,7 @@ schedule_file = st.sidebar.file_uploader("Schedule CSV", type=["csv"])
 st.sidebar.markdown("Or use backend connectors (ServiceNow / AWS Connect)")
 use_backend = st.sidebar.checkbox("Use backend API for connectors", value=False)
 if use_backend:
-    api_url = st.sidebar.text_input("Backend API URL", value="http://backend:8000/")
+    api_url = st.sidebar.text_input("Backend API URL", value="http://backend:8000/upload/records")
 
 if st.button("Upload & Analyze (local)"):
     files = {}
@@ -31,7 +31,7 @@ if st.button("Upload & Analyze (local)"):
         if calls_file: fd['calls'] = ('calls.csv', calls_file, 'text/csv')
         if schedule_file: fd['schedule'] = ('schedule.csv', schedule_file, 'text/csv')
         try:
-            resp = requests.post(f"{api_url}/upload/records", files=fd, timeout=30)
+            resp = requests.post(f"{api_url}", files=fd, timeout=30)
             st.success(f"Uploaded: {resp.status_code} - {resp.text}")
             resp2 = requests.post(f"{api_url}/analyze", data={'default_shift_hours':8.0,'overlap_rule':'split'}, timeout=60)
             st.json(resp2.json())
