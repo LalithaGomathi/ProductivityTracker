@@ -1,0 +1,34 @@
+
+version: '3.8'
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: changeme
+      POSTGRES_DB: agentdb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init_db:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+  backend:
+    build: ./backend
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql+psycopg2://appuser:changeme@db:5432/agentdb
+    depends_on:
+      - db
+  streamlit:
+    build: ./streamlit_app
+    volumes:
+      - ./streamlit_app:/app
+    ports:
+      - "8501:8501"
+    depends_on:
+      - backend
+volumes:
+  pgdata:
