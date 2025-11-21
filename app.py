@@ -16,7 +16,7 @@ schedule_file = st.sidebar.file_uploader("Schedule CSV", type=["csv"])
 st.sidebar.markdown("Or use backend connectors (ServiceNow / AWS Connect)")
 use_backend = st.sidebar.checkbox("Use backend API for connectors", value=False)
 if use_backend:
-    api_url = st.sidebar.text_input("Backend API URL", value="http://localhost:8000")
+    api_url = st.sidebar.text_input("Backend API URL", value="http://backend:8000/upload/records")
 
 if st.button("Upload & Analyze (local)"):
     files = {}
